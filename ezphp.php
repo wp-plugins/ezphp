@@ -3,7 +3,7 @@
 Version: 130123
 Plugin Name: ezPHP
 Plugin URI: http://www.s2member.com/kb/ezphp-plugin
-Description: Evaluates PHP tags in Posts (of any kind, including Pages); and also in text widgets.
+Description: Evaluates PHP tags in Posts (of any kind, including Pages); and also in text widgets. A very lightweight plugin!
 Author URI: http://www.s2member.com
 Author: s2Member® / WebSharks, Inc.
 */

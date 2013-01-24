@@ -11,11 +11,11 @@ Stable tag: 130123
 Requires at least: 3.2
 Tested up to: 3.6-alpha
 
-Evaluates PHP tags in Posts (of any kind, including Pages); and also in text widgets.
+Evaluates PHP tags in Posts (of any kind, including Pages); and also in text widgets. A very lightweight plugin!
 
 == Description ==
 
-Evaluates PHP tags in Posts (of any kind, including Pages); and also in text widgets.
+Evaluates PHP tags in Posts (of any kind, including Pages); and also in text widgets. A very lightweight plugin!
 
 This plugin is VERY simple, and there is only configurable option. You can define this PHP constant inside your `/wp-config.php` file (optional).
 
