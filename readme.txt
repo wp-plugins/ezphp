@@ -15,8 +15,6 @@ Evaluates PHP tags in Posts (of any kind, including Pages); and also in text wid
 
 == Description ==
 
-Evaluates PHP tags in Posts (of any kind, including Pages); and also in text widgets. A very lightweight plugin!
-
 This plugin is VERY simple, and there is only configurable option. You can define this PHP constant inside your `/wp-config.php` file (optional).
 
 	define('EZPHP_EXCLUDED_POST_TYPES', ''); // A comma-delimited list of Post Types to exclude.
@@ -34,5 +32,5 @@ If you don't want PHP tags evaluated in Posts, only in Pages.
 
 == Changelog ==
 
-= 1.0 =
+= v130123 =
  * Initial release.
