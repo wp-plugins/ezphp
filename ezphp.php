@@ -24,17 +24,17 @@ class ezphp
 				add_filter('get_the_excerpt', 'ezphp::filter', 1);
 				add_filter('widget_text', 'ezphp::evaluate', 1);
 			}
-		
+
 		public static function filter($content_excerpt)
 			{
 				$excluded_post_types = preg_split('/[\s;,]+/', EZPHP_EXCLUDED_POST_TYPES, NULL, PREG_SPLIT_NO_EMPTY);
-				
+
 				if(isset($GLOBALS['post']->post_type) && !in_array($GLOBALS['post']->post_type, $excluded_post_types, TRUE))
 					return ezphp::evaluate($content_excerpt);
-				
+
 				return $content_excerpt;
 			}
-			
+
 		public static function evaluate($string)
 			{
 				ob_start();
@@ -42,4 +42,3 @@ class ezphp
 				return ob_get_clean();
 			}
 	}
-?>
