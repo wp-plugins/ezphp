@@ -1,27 +1,39 @@
 <?php
 /*
-Version: 130924
+Version: 131121
+Text Domain: ezphp
 Plugin Name: ezPHP
-Plugin URI: http://www.s2member.com/kb/ezphp-plugin
-Description: Evaluates PHP tags in Posts (of any kind, including Pages); and also in text widgets. A very lightweight plugin!
-Author URI: http://www.s2member.com
-Author: s2Member® / WebSharks, Inc.
+
+Author URI: http://www.websharks-inc.com/
+Author: WebSharks, Inc. (Jason Caldwell)
+
+Plugin URI: http://www.websharks-inc.com/product/ezphp/
+Description: Evaluates PHP tags in Posts (of any kind, including Pages); and in text widgets. Very lightweight; plus it supports `[php][/php]` shortcodes!
 */
+if(!defined('WPINC')) // MUST have WordPress.
+	exit('Do NOT access this file directly: '.basename(__FILE__));
 
-if(!defined('WPINC'))
-	exit('Please do NOT access this file directly.');
+if(!defined('EZPHP_INCLUDED_POST_TYPES')) define('EZPHP_INCLUDED_POST_TYPES', '');
+if(!defined('EZPHP_EXCLUDED_POST_TYPES')) define('EZPHP_EXCLUDED_POST_TYPES', '');
 
-if(!defined('EZPHP_EXCLUDED_POST_TYPES'))
-	define('EZPHP_EXCLUDED_POST_TYPES', '');
-
-class ezphp
+class ezphp // PHP execution plugin for WordPress.
 {
-	public static $excluded_post_types = array();
+	public static $included_post_types = array(); // Inclusions array.
+	public static $excluded_post_types = array(); // Exclusions array.
 
 	public static function init() // Initialize plugin :-)
 		{
-			if(EZPHP_EXCLUDED_POST_TYPES) ezphp::$excluded_post_types = // ONE time only.
-				preg_split('/[\s;,]+/', EZPHP_EXCLUDED_POST_TYPES, NULL, PREG_SPLIT_NO_EMPTY);
+			#load_plugin_textdomain('ezphp'); // Not necessary at this time.
+
+			if(EZPHP_INCLUDED_POST_TYPES) // Specific Post Types?
+				ezphp::$included_post_types = // Convert these to an array.
+					preg_split('/[\s;,]+/', EZPHP_INCLUDED_POST_TYPES, NULL, PREG_SPLIT_NO_EMPTY);
+			ezphp::$included_post_types = apply_filters('ezphp_included_post_types', ezphp::$included_post_types);
+
+			if(EZPHP_EXCLUDED_POST_TYPES) // Specific Post Types?
+				ezphp::$excluded_post_types = // Convert these to an array.
+					preg_split('/[\s;,]+/', EZPHP_EXCLUDED_POST_TYPES, NULL, PREG_SPLIT_NO_EMPTY);
+			ezphp::$excluded_post_types = apply_filters('ezphp_excluded_post_types', ezphp::$excluded_post_types);
 
 			add_filter('the_content', 'ezphp::filter', 1);
 			add_filter('get_the_excerpt', 'ezphp::filter', 1);
@@ -30,9 +42,15 @@ class ezphp
 
 	public static function filter($content_excerpt)
 		{
-			if(isset($GLOBALS['post']->post_type)) // Have the post type?
-				if(in_array($GLOBALS['post']->post_type, ezphp::$excluded_post_types, TRUE))
-					return $content_excerpt; // Exclude post type; e.g. do NOT evaluate.
+			$post_type = get_post_type();
+
+			if($post_type && ezphp::$included_post_types) // Specific inclusions?
+				if(!in_array($post_type, ezphp::$included_post_types, TRUE))
+					return $content_excerpt; // Exclude.
+
+			if($post_type && ezphp::$excluded_post_types) // Specific exclusions?
+				if(in_array($post_type, ezphp::$excluded_post_types, TRUE))
+					return $content_excerpt; // Exclude.
 
 			return ezphp::evaluate($content_excerpt);
 		}
@@ -57,6 +75,18 @@ class ezphp
 
 			return $string; // All done :-)
 		}
+
+	public static function activate()
+		{
+			ezphp::init(); // Nothing more at this time.
+		}
+
+	public static function deactivate()
+		{
+			// Not necessary at this time.
+		}
 }
 
 add_action('init', 'ezphp::init', 1);
+register_activation_hook(__FILE__, 'ezphp::activate');
+register_deactivation_hook(__FILE__, 'ezphp::deactivate');
