@@ -1,14 +1,14 @@
 === ezPHP for WordPress ===
 
-Stable tag: 131121
+Stable tag: 150214
 Requires at least: 3.3
-Tested up to: 3.8
+Tested up to: 4.2-alpha
 Text Domain: ezphp
 
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Contributors: WebSharks
+Contributors: WebSharks, JasWSInc
 Donate link: http://www.websharks-inc.com/r/wp-theme-plugin-donation/
 Tags: post, pages, posts, code, php, eval, exec, eval php, exec php, easy php, ez php, variables, conditionals
 
@@ -87,6 +87,11 @@ Released under the terms of the [GNU General Public License](http://www.gnu.org/
 	- Font Awesome <http://fortawesome.github.io/Font-Awesome/>
 
 == Changelog ==
+
+= v150214 =
+
+* General maintenance.
+* Tested against WordPress v4.1 and v4.2-alpha.
 
 = v131121 =
 
